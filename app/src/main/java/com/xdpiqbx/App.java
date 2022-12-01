@@ -6,10 +6,12 @@ package com.xdpiqbx;
 import com.xdpiqbx.db.Database;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 public class App {
     public static void main(String[] args) {
         Database db = Database.getInstance();
         Connection conn = db.getConnection();
+        db.close();
     }
 }

@@ -9,7 +9,13 @@ import java.sql.SQLException;
 public class Database {
     private static Database INSTANCE;
     private static Connection connection;
-    private Database(){ }
+    private Database(){
+        try{
+            connection = DriverManager.getConnection(Helper.env("DB_URL"));
+        }catch (SQLException e){
+            throw new RuntimeException("No connection!");
+        }
+    }
     public static Database getInstance(){
         if(INSTANCE == null){
             INSTANCE = new Database();
@@ -17,10 +23,14 @@ public class Database {
         return INSTANCE;
     }
     public Connection getConnection(){
+        return connection;
+    }
+    public void close(){
         try{
-            return DriverManager.getConnection(Helper.env("DB_URL"));
+            System.out.println("Connection to db close.");
+            connection.close();
         }catch (SQLException e){
-            throw new RuntimeException("No connection!");
+            e.printStackTrace();
         }
     }
 }
