@@ -1,4 +1,4 @@
-package com.xdpiqbx.db.Services;
+package com.xdpiqbx.db.services;
 
 import com.xdpiqbx.common.Helper;
 import com.xdpiqbx.db.Database;
