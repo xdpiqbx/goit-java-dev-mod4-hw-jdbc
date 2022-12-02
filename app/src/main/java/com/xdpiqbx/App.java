@@ -3,6 +3,7 @@
  */
 package com.xdpiqbx;
 
+import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
 import com.xdpiqbx.db.Database;
 import com.xdpiqbx.db.services.DatabaseQueryService;
@@ -12,8 +13,13 @@ import java.util.List;
 
 public class App {
     public static void main(String[] args) {
-        List<MaxProjectCountClient> maxProjectCountClients = new DatabaseQueryService().longestProject();
-        for (MaxProjectCountClient el: maxProjectCountClients) {
+//        List<MaxProjectCountClient> maxProjectCountClients = new DatabaseQueryService().maxProjectCountClient();
+//        for (MaxProjectCountClient el: maxProjectCountClients) {
+//            System.out.println(el);
+//        }
+
+        List<LongestProject> longestProjects = new DatabaseQueryService().longestProject();
+        for (LongestProject el: longestProjects) {
             System.out.println(el);
         }
     }

@@ -1,6 +1,7 @@
 package com.xdpiqbx.db.services;
 
 import com.xdpiqbx.common.Helper;
+import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
 import com.xdpiqbx.db.Database;
 
@@ -23,7 +24,7 @@ public class DatabaseQueryService {
             throw new RuntimeException(e);
         }
     }
-    public List<MaxProjectCountClient> longestProject(){
+    public List<MaxProjectCountClient> maxProjectCountClient(){
         try {
             Statement st = db.getConnection().createStatement();
             ResultSet rs = st.executeQuery(sqlQueryFromFile("find_max_projects_client"));
@@ -42,8 +43,30 @@ public class DatabaseQueryService {
             throw new RuntimeException(e);
         }
     }
-//    public static void maxProjectCountClient(){}
+    public List<LongestProject> longestProject(){
+        try {
+            Statement st = db.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(sqlQueryFromFile("find_longest_project"));
+            List<LongestProject> longestProjects = new ArrayList<>();
+            while(rs.next()){
+                longestProjects.add(
+                        new LongestProject(
+                                rs.getString("name"),
+                                rs.getInt("month_count")
+                        ));
+            }
+            rs.close();
+            st.close();
+            return longestProjects;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 //    public static void maxSalaryWorker(){}
 //    public static void youngestAndEldestWorkers(){}
 //    public static void projectPrices(){}
 }
+
+//  find_max_salary_worker.sql
+//  find_youngest_eldest_workers.sql
+//  print_project_prices.sql
