@@ -4,6 +4,7 @@ import com.xdpiqbx.common.Helper;
 import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
 import com.xdpiqbx.db.DataModels.MaxSalaryWorker;
+import com.xdpiqbx.db.DataModels.YoungestEldestWorker;
 import com.xdpiqbx.db.Database;
 
 import java.io.IOException;
@@ -82,7 +83,26 @@ public class DatabaseQueryService {
             throw new RuntimeException(e);
         }
     }
-//    public List<MaxSalaryWorker> youngestAndEldestWorkers(){}
+    public List<YoungestEldestWorker> youngestAndEldestWorkers(){
+        try {
+            Statement st = db.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(sqlQueryFromFile("find_youngest_eldest_workers"));
+            List<YoungestEldestWorker> youngestEldestWorkers = new ArrayList<>();
+            while(rs.next()){
+                youngestEldestWorkers.add(
+                        new YoungestEldestWorker(
+                                rs.getString("type"),
+                                rs.getString("name"),
+                                rs.getString("birthday")
+                        ));
+            }
+            rs.close();
+            st.close();
+            return youngestEldestWorkers;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 //    public List<MaxSalaryWorker> projectPrices(){}
 }
 

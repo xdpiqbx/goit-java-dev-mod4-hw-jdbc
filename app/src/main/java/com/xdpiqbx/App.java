@@ -3,17 +3,16 @@
  */
 package com.xdpiqbx;
 
+import com.xdpiqbx.db.services.DatabaseQueryService;
 import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
 import com.xdpiqbx.db.DataModels.MaxSalaryWorker;
-import com.xdpiqbx.db.Database;
-import com.xdpiqbx.db.services.DatabaseQueryService;
-
-import java.sql.Connection;
+import com.xdpiqbx.db.DataModels.YoungestEldestWorker;
 import java.util.List;
 
 public class App {
     public static void main(String[] args) {
+
 //        List<MaxProjectCountClient> maxProjectCountClients = new DatabaseQueryService().maxProjectCountClient();
 //        for (MaxProjectCountClient el: maxProjectCountClients) {
 //            System.out.println(el);
@@ -24,8 +23,13 @@ public class App {
 //            System.out.println(el);
 //        }
 
-        List<MaxSalaryWorker> maxSalaryWorkers = new DatabaseQueryService().maxSalaryWorker();
-        for (MaxSalaryWorker el: maxSalaryWorkers) {
+//        List<MaxSalaryWorker> maxSalaryWorkers = new DatabaseQueryService().maxSalaryWorker();
+//        for (MaxSalaryWorker el: maxSalaryWorkers) {
+//            System.out.println(el);
+//        }
+
+        List<YoungestEldestWorker> youngestEldestWorkers = new DatabaseQueryService().youngestAndEldestWorkers();
+        for (YoungestEldestWorker el: youngestEldestWorkers) {
             System.out.println(el);
         }
     }
