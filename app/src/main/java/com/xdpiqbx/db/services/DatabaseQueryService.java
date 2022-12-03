@@ -3,6 +3,7 @@ package com.xdpiqbx.db.services;
 import com.xdpiqbx.common.Helper;
 import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
+import com.xdpiqbx.db.DataModels.MaxSalaryWorker;
 import com.xdpiqbx.db.Database;
 
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.List;
 public class DatabaseQueryService {
     private static final Database db = Database.getInstance();
     private static final String path = Helper.env("SQL_FILES_PATH");
-    private String sqlQueryFromFile(String fileName){
+    private static String sqlQueryFromFile(String fileName){
         try {
             return String.join("\n", Files.readAllLines(Paths.get(path+fileName+".sql")));
         } catch (IOException e) {
@@ -32,8 +33,8 @@ public class DatabaseQueryService {
             while(rs.next()){
                 maxProjectCountClients.add(
                     new MaxProjectCountClient(
-                            rs.getString("name"),
-                            rs.getInt("project_count")
+                        rs.getString("name"),
+                        rs.getInt("project_count")
                     ));
             }
             rs.close();
@@ -50,10 +51,10 @@ public class DatabaseQueryService {
             List<LongestProject> longestProjects = new ArrayList<>();
             while(rs.next()){
                 longestProjects.add(
-                        new LongestProject(
-                                rs.getString("name"),
-                                rs.getInt("month_count")
-                        ));
+                    new LongestProject(
+                        rs.getString("name"),
+                        rs.getInt("month_count")
+                    ));
             }
             rs.close();
             st.close();
@@ -62,11 +63,28 @@ public class DatabaseQueryService {
             throw new RuntimeException(e);
         }
     }
-//    public static void maxSalaryWorker(){}
-//    public static void youngestAndEldestWorkers(){}
-//    public static void projectPrices(){}
+    public List<MaxSalaryWorker> maxSalaryWorker(){
+        try {
+            Statement st = db.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(sqlQueryFromFile("find_max_salary_worker"));
+            List<MaxSalaryWorker> maxSalaryWorkers = new ArrayList<>();
+            while(rs.next()){
+                maxSalaryWorkers.add(
+                    new MaxSalaryWorker(
+                        rs.getString("name"),
+                        rs.getInt("salary")
+                    ));
+            }
+            rs.close();
+            st.close();
+            return maxSalaryWorkers;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+//    public List<MaxSalaryWorker> youngestAndEldestWorkers(){}
+//    public List<MaxSalaryWorker> projectPrices(){}
 }
 
-//  find_max_salary_worker.sql
 //  find_youngest_eldest_workers.sql
 //  print_project_prices.sql

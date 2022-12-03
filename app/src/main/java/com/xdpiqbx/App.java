@@ -5,6 +5,7 @@ package com.xdpiqbx;
 
 import com.xdpiqbx.db.DataModels.LongestProject;
 import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
+import com.xdpiqbx.db.DataModels.MaxSalaryWorker;
 import com.xdpiqbx.db.Database;
 import com.xdpiqbx.db.services.DatabaseQueryService;
 
@@ -18,8 +19,13 @@ public class App {
 //            System.out.println(el);
 //        }
 
-        List<LongestProject> longestProjects = new DatabaseQueryService().longestProject();
-        for (LongestProject el: longestProjects) {
+//        List<LongestProject> longestProjects = new DatabaseQueryService().longestProject();
+//        for (LongestProject el: longestProjects) {
+//            System.out.println(el);
+//        }
+
+        List<MaxSalaryWorker> maxSalaryWorkers = new DatabaseQueryService().maxSalaryWorker();
+        for (MaxSalaryWorker el: maxSalaryWorkers) {
             System.out.println(el);
         }
     }
