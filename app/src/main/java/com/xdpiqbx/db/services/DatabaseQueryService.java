@@ -16,12 +16,8 @@ import java.util.List;
 public class DatabaseQueryService {
     private static final Database db = Database.getInstance();
     private static final String path = Helper.env("SQL_FILES_PATH");
-    private static String sqlQueryFromFile(String fileName){
-        try {
-            return String.join("\n", Files.readAllLines(Paths.get(path+fileName+".sql")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public static void main(String[] args) {
+        printResult();
     }
     public List<MaxProjectCountClient> maxProjectCountClient(){
         try {
@@ -117,6 +113,44 @@ public class DatabaseQueryService {
             return projectPrices;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+    private static String sqlQueryFromFile(String fileName){
+        try {
+            return String.join("\n", Files.readAllLines(Paths.get(path+fileName+".sql")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void printResult(){
+        System.out.println("\nList<MaxProjectCountClient> maxProjectCountClients");
+        List<MaxProjectCountClient> maxProjectCountClients = new DatabaseQueryService().maxProjectCountClient();
+        for (MaxProjectCountClient el: maxProjectCountClients) {
+            System.out.println(el);
+        }
+
+        System.out.println("\nList<LongestProject> longestProjects");
+        List<LongestProject> longestProjects = new DatabaseQueryService().longestProject();
+        for (LongestProject el: longestProjects) {
+            System.out.println(el);
+        }
+
+        System.out.println("\nList<MaxSalaryWorker> maxSalaryWorkers");
+        List<MaxSalaryWorker> maxSalaryWorkers = new DatabaseQueryService().maxSalaryWorker();
+        for (MaxSalaryWorker el: maxSalaryWorkers) {
+            System.out.println(el);
+        }
+
+        System.out.println("\nList<YoungestEldestWorker> youngestEldestWorkers");
+        List<YoungestEldestWorker> youngestEldestWorkers = new DatabaseQueryService().youngestAndEldestWorkers();
+        for (YoungestEldestWorker el: youngestEldestWorkers) {
+            System.out.println(el);
+        }
+
+        System.out.println("\nList<ProjectPrice> projectPrices");
+        List<ProjectPrice> projectPrices = new DatabaseQueryService().projectPrice();
+        for (ProjectPrice el: projectPrices) {
+            System.out.println(el);
         }
     }
 }

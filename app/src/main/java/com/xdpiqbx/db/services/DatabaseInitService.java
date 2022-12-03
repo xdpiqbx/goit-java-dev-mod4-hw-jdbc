@@ -9,8 +9,7 @@ import java.nio.file.Paths;
 
 public class DatabaseInitService {
     public static void main(String[] args) {
-        String initDbFile = Helper.env("SQL_FILES_PATH") + "init_db.sql";
-        initDb(Database.getInstance(), initDbFile);
+        initDatabase();
     }
     public static void initDb(Database db, String pathToFile){
         try {
@@ -19,5 +18,9 @@ public class DatabaseInitService {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static void initDatabase(){
+        String initDbFile = Helper.env("SQL_FILES_PATH") + "init_db.sql";
+        initDb(Database.getInstance(), initDbFile);
     }
 }
