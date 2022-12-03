@@ -1,10 +1,7 @@
 package com.xdpiqbx.db.services;
 
 import com.xdpiqbx.common.Helper;
-import com.xdpiqbx.db.DataModels.LongestProject;
-import com.xdpiqbx.db.DataModels.MaxProjectCountClient;
-import com.xdpiqbx.db.DataModels.MaxSalaryWorker;
-import com.xdpiqbx.db.DataModels.YoungestEldestWorker;
+import com.xdpiqbx.db.DataModels.*;
 import com.xdpiqbx.db.Database;
 
 import java.io.IOException;
@@ -103,8 +100,23 @@ public class DatabaseQueryService {
             throw new RuntimeException(e);
         }
     }
-//    public List<MaxSalaryWorker> projectPrices(){}
+    public List<ProjectPrice> projectPrice(){
+        try {
+            Statement st = db.getConnection().createStatement();
+            ResultSet rs = st.executeQuery(sqlQueryFromFile("print_project_prices"));
+            List<ProjectPrice> projectPrices = new ArrayList<>();
+            while(rs.next()){
+                projectPrices.add(
+                    new ProjectPrice(
+                        rs.getString("name"),
+                        rs.getInt("price")
+                    ));
+            }
+            rs.close();
+            st.close();
+            return projectPrices;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
-
-//  find_youngest_eldest_workers.sql
-//  print_project_prices.sql
